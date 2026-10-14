@@ -1,0 +1,111 @@
+/* Settings are scoped to an active design so the published default stays intact. */
+.design-launch{text-decoration:none}
+html[data-preview=embedded] .site-header{position:relative}
+html[data-preview=embedded] .design-launch,html[data-preview=embedded] #design-dialog{display:none}
+html[data-preview=embedded]{scroll-padding-top:24px}
+html[data-design=active][data-theme=notebook]{--paper:#f7f7ef;--surface:#fffef8;--ink:#252820;--muted:#64695c;--line:#d9ddcf;--accent:#d3df81;--accent-dark:#536724;--tint:#edf0df}
+html[data-design=active][data-theme=plum]{--paper:#f8f4f8;--surface:#fffbff;--ink:#302334;--muted:#756779;--line:#e2d5e5;--accent:#dfb8ef;--accent-dark:#74428b;--tint:#efe4f2}
+html[data-design=active][data-theme=mono]{--paper:#f5f5f3;--surface:#fff;--ink:#202120;--muted:#626563;--line:#d7d9d6;--accent:#d4d8d2;--accent-dark:#454c43;--tint:#e9ece7}
+html[data-design=active][data-theme=night]{--paper:#151c24;--surface:#1b2630;--ink:#eff4f7;--muted:#a5b5c0;--line:#35434d;--accent:#b9e69a;--accent-dark:#b9e69a;--tint:#243239;--error:#f0aa95;--error-bg:#3a2c2a;--accent-ink:#151c24;color-scheme:dark}
+html[data-design=active]{--accent-ink:var(--ink)}
+html[data-design=active] .hero h1 em{isolation:isolate}
+html[data-design=active] .editor-note,html[data-design=active] .bid,html[data-design=active] .token.solid{color:var(--accent-ink)}
+html[data-design=active] .paper-section .button{color:var(--accent-ink)}
+html[data-design=active] .paper-section .button:hover{color:var(--ink)}
+html[data-theme=night][data-design=active] .paper-section{background:#0d131a;color:var(--ink)}
+html[data-theme=night][data-design=active] .paper-section .button:hover{color:var(--ink)}
+html[data-theme=night][data-design=active] .button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+html[data-theme=night][data-design=active] .model-buttons button[aria-pressed=true]{color:var(--paper)}
+html[data-theme=night][data-design=active] .bar{background:#5d727b}
+html[data-theme=night][data-design=active] .chart-row.highlight .bar{background:var(--accent-dark)}
+html[data-typography=technical]{--sans:'IBM Plex Sans',Arial,sans-serif;--serif:'Space Grotesk',Arial,sans-serif}
+html[data-typography=technical] h1,html[data-typography=technical] h2,html[data-typography=technical] h3,html[data-typography=technical] .metric-value,html[data-typography=technical] .gain{font-family:'Space Grotesk',Arial,sans-serif;letter-spacing:-.045em}
+html[data-typography=technical] h1 em,html[data-typography=technical] h2 em{font-style:normal;font-weight:500}
+html[data-typography=technical] .hero h1{font-size:clamp(48px,5.3vw,76px)}
+html[data-typography=technical] .sheet{box-shadow:5px 5px 0 var(--line)}
+html[data-typography=scholarly]{--sans:'Source Sans 3',Arial,sans-serif;--serif:'Source Serif 4',Georgia,serif}
+html[data-typography=scholarly] h1,html[data-typography=scholarly] h2,html[data-typography=scholarly] h3{font-family:var(--serif);letter-spacing:-.045em}
+html[data-typography=scholarly] .hero h1{font-size:clamp(48px,5.2vw,75px);line-height:1.1}
+html[data-typography=scholarly] .hero h1 em{letter-spacing:-.045em}
+html[data-typography=scholarly] .hero-intro,html[data-typography=scholarly] .lead{font-size:18px;line-height:1.75}
+html[data-typography=scholarly] .editor-note{font-size:19px}
+html[data-typography=swiss]{--sans:'Manrope',Arial,sans-serif;--serif:'Manrope',Arial,sans-serif}
+html[data-typography=swiss] h1,html[data-typography=swiss] h2,html[data-typography=swiss] h3{font-weight:600;letter-spacing:-.055em}
+html[data-typography=swiss] h1 em,html[data-typography=swiss] h2 em{font-style:normal;font-weight:600;letter-spacing:inherit}
+html[data-typography=swiss] .hero h1{font-size:clamp(47px,5.1vw,74px)}
+html[data-typography=swiss] .editor-note{font-size:16px;font-weight:600;line-height:1.4;transform:none}
+html[data-typography=swiss] .hero-art{background-image:none}
+html[data-typography=swiss] .sheet{box-shadow:none}
+html[data-hero=centered] .hero-grid{grid-template-columns:1fr;text-align:center;gap:40px}
+html[data-hero=centered] .hero-grid>div{max-width:890px;margin:auto}
+html[data-hero=centered] .hero h1{font-size:clamp(56px,7vw,94px);line-height:1.02}
+html[data-hero=centered] .hero h1 br:nth-of-type(2){display:none}
+html[data-hero=centered] .hero-intro{max-width:600px;margin:26px auto 0}
+html[data-hero=centered] .hero-actions,html[data-hero=centered] .names{justify-content:center}
+html[data-hero=centered] .hero-art{width:min(610px,100%);margin:0 auto;text-align:left}
+html[data-hero=centered] .hero-top{justify-content:center}
+html[data-hero=centered] .hero-top .edition{display:none}
+html[data-hero=centered] .paper-title{max-width:900px;margin:48px auto 0}
+html[data-hero=paper] .hero{padding-top:60px;padding-bottom:55px}
+html[data-hero=paper] .hero-top{justify-content:center}
+html[data-hero=paper] .hero-top .edition{display:none}
+html[data-hero=paper] .hero-grid{display:block;max-width:990px;margin:34px auto 0;text-align:center}
+html[data-hero=paper] .hero-art,html[data-hero=paper] .paper-title{display:none}
+html[data-hero=paper] .hero h1{font-size:clamp(42px,5vw,67px);line-height:1.13;letter-spacing:-.04em;text-wrap:balance}
+html[data-hero=paper] .hero h1 em{letter-spacing:-.04em;white-space:normal}
+html[data-hero=paper] .hero h1 span{display:block;font-size:.66em;line-height:1.24;margin-top:12px;font-weight:400;letter-spacing:-.025em}
+html[data-hero=paper] .hero-intro{max-width:660px;margin:28px auto 0;font-size:17px}
+html[data-hero=paper] .hero-actions,html[data-hero=paper] .names{justify-content:center}
+html[data-hero=paper] .author-block{margin-top:25px}
+html[data-accent=marker] .hero h1 em:after{height:.22em;bottom:.05em;transform:rotate(-2deg)}
+html[data-accent=underline] .hero h1 em:after{height:3px;bottom:0;background:var(--accent-dark);transform:none}
+html[data-accent=underline] .editor-note{background:transparent;color:var(--accent-dark);box-shadow:none;border-bottom:2px solid var(--accent-dark);transform:rotate(-3deg);padding:8px 14px}
+html[data-accent=underline] .section h2 em{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:7px;text-decoration-color:var(--accent-dark)}
+html[data-accent=dot] .hero h1 em:after{height:.15em;width:.15em;left:auto;right:-.23em;bottom:.16em;border-radius:50%;transform:none;background:var(--accent-dark)}
+html[data-accent=dot] .eyebrow:before{border-radius:50%;width:9px;height:9px}
+html[data-accent=dot] .editor-note{background:var(--surface);color:var(--accent-dark);border-left:4px solid var(--accent-dark);box-shadow:none;transform:none}
+html[data-accent=dot] .section-number span{border-radius:50%;min-width:25px;text-align:center;background:var(--accent);border-color:transparent;color:var(--accent-ink)}
+html[data-accent=quiet] .hero h1 em:after{display:none}
+html[data-accent=quiet] .hero-art{background-image:none}
+html[data-accent=quiet] .sheet{box-shadow:none}
+html[data-accent=quiet] .editor-note{background:var(--surface);color:var(--muted);border:1px solid var(--line);box-shadow:none;transform:none;font-family:var(--sans);font-size:16px}
+html[data-accent=quiet] .eyebrow:before{background:var(--muted)}
+html[data-density=spacious] .section{padding-top:115px;padding-bottom:115px}
+html[data-density=spacious] .hero{padding-top:105px;padding-bottom:70px}
+html[data-density=spacious] .section-head{margin-bottom:55px}
+html[data-density=spacious] .paper-section{padding-top:88px;padding-bottom:88px}
+html[data-density=spacious] .hero-grid{gap:85px}
+html[data-density=compact] .section{padding-top:54px;padding-bottom:54px}
+html[data-density=compact] .hero{padding-top:40px;padding-bottom:34px}
+html[data-density=compact] .hero-grid{margin-top:26px;gap:40px}
+html[data-density=compact] .hero h1{font-size:clamp(48px,5vw,68px)}
+html[data-density=compact] .paper-title{margin-top:32px;padding-top:20px}
+html[data-density=compact] .section-head{margin-bottom:26px}
+html[data-density=compact] .paper-section{padding-top:44px;padding-bottom:44px}
+html[data-density=compact] .metric{padding-top:20px;padding-bottom:20px}
+html[data-corners=soft] .sheet,html[data-corners=soft] .example,html[data-corners=soft] .chart-panel,html[data-corners=soft] .method-film,html[data-corners=soft] .citation,html[data-corners=soft] .table-scroll{border-radius:16px;overflow:hidden}
+html[data-corners=soft] .button,html[data-corners=soft] .nav-paper,html[data-corners=soft] .model-buttons button,html[data-corners=soft] .demo-controls button,html[data-corners=soft] .mini-browser,html[data-corners=soft] .fake-search,html[data-corners=soft] .trace-part code{border-radius:8px}
+html[data-corners=soft] .editor-note,html[data-corners=soft] .token{border-radius:6px}
+.design-method-poster{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:#f7f7ef}
+.design-method-poster[hidden],.method-film video[hidden]{display:none}
+.method-film[data-mode=overview] .film-chapters,.method-film[data-mode=static] .film-chapters,.method-film[data-mode=overview] .film-transcript{display:none}
+@media(max-width:760px){
+  html[data-design=active] .hero h1{font-size:clamp(45px,8.8vw,65px);letter-spacing:-.045em}
+  html[data-design=active] .hero h1 em{letter-spacing:inherit}
+  html[data-design=active] .hero h1 em{white-space:normal}
+  html[data-hero=centered] .hero h1 br:nth-of-type(2){display:block}
+  html[data-hero=paper] .hero h1{font-size:clamp(35px,7.7vw,52px)}
+  html[data-hero=paper] .hero h1 span{font-size:.72em}
+  html[data-hero=paper] .hero-intro{font-size:15px}
+  html[data-hero=paper] .hero-actions,html[data-hero=centered] .hero-actions{max-width:420px;margin-left:auto;margin-right:auto}
+  html[data-density=spacious] .section{padding:78px 0}
+  html[data-density=spacious] .hero{padding:65px 0 50px}
+  html[data-density=spacious] .hero-grid{gap:45px}
+  html[data-density=spacious] .section-head{margin-bottom:36px}
+  html[data-density=compact] .section{padding:38px 0}
+  html[data-density=compact] .hero{padding:28px 0}
+  html[data-density=compact] .hero-grid{gap:26px}
+  html[data-design=active] .section h2{font-size:35px}
+  html[data-design=active] .author-block .names{flex-wrap:wrap;column-gap:18px;row-gap:3px}
+  html[data-design=active] .editor-note{right:0}
+}

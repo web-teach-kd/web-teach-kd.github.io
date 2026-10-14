@@ -1,0 +1,36 @@
+[
+  {
+    "start": 0.0,
+    "chapter": "Context",
+    "title": "Edit the failure at the student's own contexts."
+  },
+  {
+    "start": 9.867,
+    "chapter": "Premium",
+    "title": "Why can a correct edit be hard to learn?"
+  },
+  {
+    "start": 20.6,
+    "chapter": "Action contribution",
+    "title": "Which reasoning actually supports the action?"
+  },
+  {
+    "start": 35.833,
+    "chapter": "Loss and masks",
+    "title": "The training objective"
+  },
+  {
+    "start": 46.867,
+    "chapter": "Anchor intuition",
+    "title": "The anchor responds to drift from the seed."
+  },
+  {
+    "start": 59.4,
+    "chapter": "Takeaway",
+    "title": "Pay the premium where it improves the decision."
+  },
+  {
+    "start": 66.533,
+    "chapter": "End"
+  }
+]
