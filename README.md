@@ -42,7 +42,7 @@ Files: `design-explorer.html`, `design-explorer.css`, `design-explorer.js`, `des
 2. **Overview:** concise method description and student / raw teacher / style-preserving correction examples.
 3. **Method:** Manim explanation, four training stages, and an enlarged expandable equation reference. The full loss is inside the disclosure with the contribution scores, weight map, and anchor. Its equation and two concise term descriptions sit side by side on wide screens and stack on mobile.
 4. **Experimental results:** separate panels for seen TimeWarp v6, unseen v1–v5, and OnlineMind2Web. TimeWarp model/version controls update charts with standard-error whiskers and complete data tables. OnlineMind2Web has model and difficulty controls, mean/standard-error bars, and a complete table using the author-supplied numerical values. The original figure remains linked for reference.
-5. **Paper and citation:** preprint download and copyable provisional BibTeX.
+5. **Paper and citation:** canonical arXiv link and copyable BibTeX with the arXiv identifier, year, and subject class.
 
 The presentation uses academic labels, without slogans, headline metric cards, or a standalone loss banner. `paper-layout.css` controls the revised hierarchy. `results-data.js` stores the transcribed source values; `results.js` and `results.css` render the benchmark panels.
 
@@ -72,8 +72,8 @@ Copy the output MP4 and PNG into the asset paths above. No LaTeX is required. Th
 
 The supplied preprint is copied to `assets/webkd-paper.pdf`. TimeWarp values are transcribed from Table 1 (p. 7): 144 mean/standard-error pairs across three students, eight methods, and six versions. OnlineMind2Web uses 56 mean/standard-error pairs supplied by the author on October 14, 2026, covering two students, seven methods, and four difficulty/overall groups. Values are stored as fractions and displayed as percentages; difficulty rates refer to each subset. Overall results and their standard errors are used as supplied, without reconstructing them from subset results. The original Figure 4 (p. 8) remains available for reference. Means and standard errors are over three runs. No Gemma results are inferred. Two Qwen 4B overall means (Takeover and Re-style) currently disagree with the weighted difficulty means; the supplied table values are retained verbatim.
 
-The browser correction example is explicitly illustrative and adapted from Figure 1. It is not a recorded or live agent session. The provisional BibTeX omits a year and publication venue because the supplied preprint is undated. Confirm archival metadata before publication. The footer contains only the webkd home link and Code. The hero and footer Code links point to the user-provided [WEBKD repository](https://github.com/sparklabutah/webkd).
+The browser correction example is explicitly illustrative and adapted from Figure 1. It is not a recorded or live agent session. Paper links use [arXiv:2610.19834](https://arxiv.org/abs/2610.19834). The BibTeX follows the arXiv title and metadata (2026, cs.AI). The footer contains only the webkd home link and Code. The hero and footer Code links point to the user-provided [WEBKD repository](https://github.com/sparklabutah/webkd).
 
 The University of Utah wordmark comes from the [official university website asset](https://templates.utah.edu/_main-v3-1/images/template/university-of-utah-logo.svg). The dark version preserves the asset; the light version changes its white lettering to black and retains the red mark.
 
-The site is a buildless static site. Serve it locally with `python3 serve.py`, or serve the repository root with static hosting. The navigation’s “Read the paper” link opens the bundled PDF directly.
+The site is a buildless static site. Serve it locally with `python3 serve.py`, or serve the repository root with static hosting. The navigation’s “Read the paper” link opens the canonical arXiv page directly.

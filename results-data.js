@@ -53,7 +53,7 @@ window.WEBKD_RESULTS = {
       "title": "Teaching Agents in Their Own Style: Black-Box Teacher Distillation for Web Agents",
       "label": "Table 1",
       "page": 7,
-      "href": "assets/webkd-paper.pdf#page=7",
+      "href": "https://arxiv.org/pdf/2610.19834#page=7",
       "metric": "Success rate",
       "unit": "percent",
       "runs": 3,
@@ -763,7 +763,7 @@ window.WEBKD_RESULTS = {
     "source": {
       "title": "OnlineMind2Web numerical results supplied by the author",
       "label": "Provided results table",
-      "referenceHref": "assets/webkd-paper.pdf#page=8",
+      "referenceHref": "https://arxiv.org/pdf/2610.19834#page=8",
       "figurePath": "assets/onlinemind2web-results.png",
       "metric": "Success rate",
       "unit": "fraction",

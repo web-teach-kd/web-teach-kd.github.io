@@ -44,7 +44,7 @@
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="#" aria-label="WEBKD home"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M4 10l7 18 7-13 7 13 7-18" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M24 6h9" stroke="var(--accent-dark)" stroke-width="2.5"/></svg>webkd</a>
-      <nav class="nav" id="nav" aria-label="Main navigation"><a href="#idea">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="assets/webkd-paper.pdf" class="nav-paper">Read the paper <span aria-hidden="true">↗</span></a></nav>
+      <nav class="nav" id="nav" aria-label="Main navigation"><a href="#idea">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="https://arxiv.org/abs/2610.19834" class="nav-paper">Read the paper <span aria-hidden="true">↗</span></a></nav>
       <div class="header-actions">
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark mode">
           <svg class="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg>
@@ -64,7 +64,7 @@
           <h1 id="hero-title"><span class="paper-heading-main">Teaching Agents in Their <em>Own Style:</em></span> <span class="paper-heading-subtitle">Black-Box Teacher Distillation for Web Agents</span></h1>
           </div>
           <div class="author-block"><div class="names"><a href="mailto:farhan.ishmam@utah.edu">Md Farhan Ishmam</a><a href="mailto:kenneth.marino@utah.edu">Kenneth Marino</a></div><p class="muted">Kahlert School of Computing · University of Utah</p></div>
-          <div class="hero-actions"><a class="button primary" href="assets/webkd-paper.pdf" target="_blank" rel="noopener">Paper <span class="arrow" aria-hidden="true">↗</span></a><a class="button" href="https://github.com/sparklabutah/webkd" target="_blank" rel="noopener">Code <span class="arrow" aria-hidden="true">↗</span></a></div>
+          <div class="hero-actions"><a class="button primary" href="https://arxiv.org/abs/2610.19834" target="_blank" rel="noopener">Paper <span class="arrow" aria-hidden="true">↗</span></a><a class="button" href="https://github.com/sparklabutah/webkd" target="_blank" rel="noopener">Code <span class="arrow" aria-hidden="true">↗</span></a></div>
         </div>
         <figure class="hero-art" aria-label="Illustration of an agent selecting the wrong search element and a teacher correcting its action">
           <div class="sheet">
@@ -126,14 +126,14 @@
           <article class="loss-detail"><span class="mono">Eq. 4 / Credit assignment</span><h4>Leave-one-out action contribution</h4><div class="equation-canvas"><img src="assets/formulas/information.svg" alt="Delta s is the frozen student's log probability of the corrected action with the span minus without the span." loading="lazy"></div><p>Both scores use the frozen behavior-cloned student. A span earns credit when its presence increases the probability of the corrected action. Negative contributions stay in the ranking.</p></article>
           <article class="loss-detail"><span class="mono">Eq. 10 / From rank to weight</span><h4>Within-step rank weights</h4><div class="equation-canvas"><img src="assets/formulas/weights.svg" alt="Rank-derived weights are contracted toward the midpoint according to contribution spread, then clipped between phi and one." loading="lazy"></div><p>Ranks are normalized within each step; ties share their average rank. With φ = 0.1 and τ = 0.05 nats, identical contributions yield 0.55. Action and step CE weights are pinned to 1.</p></article>
           <article class="loss-detail"><span class="mono">Eq. 5 / How far to move</span><h4>Role-asymmetric anchoring</h4><div class="equation-canvas"><img src="assets/formulas/kl.svg" alt="The pointwise penalty is exp d minus d minus one; d is the seed log probability minus the current policy log probability of a target token." loading="lazy"></div><p>Here pᵢ is the current student’s target-token probability and qᵢ is the frozen seed’s. On corpus target tokens, use γ = 1 for think/plan/memory and γ = 10⁻⁶ elsewhere. This pointwise surrogate is not an exact full-vocabulary KL. β = 0.03 in the reported configuration.</p></article>
-        </div><p class="loss-note">Notation: π<sub>BC</sub> is the frozen behavior-cloned seed, π<sub>θ</sub> is the student being trained. <a href="design-explorer.html#math">Explore the formulas and a numerical example ↗</a> · <a href="assets/webkd-paper.pdf#page=17" target="_blank" rel="noopener">Appendix B.4–B.5 ↗</a></p></details>
+        </div><p class="loss-note">Notation: π<sub>BC</sub> is the frozen behavior-cloned seed, π<sub>θ</sub> is the student being trained. <a href="design-explorer.html#math">Explore the formulas and a numerical example ↗</a> · <a href="https://arxiv.org/pdf/2610.19834#page=17" target="_blank" rel="noopener">Appendix B.4–B.5 ↗</a></p></details>
       </div>
     </div></section>
     <section class="section results wrap" id="results" aria-labelledby="results-title">
       <div class="section-head"><p class="section-number"><span>03</span> Evaluation</p><div><h2 id="results-title">Experimental results</h2><p class="lead">TimeWarp and OnlineMind2Web evaluation. Select a student model to compare methods.</p></div></div>
 
       <article class="benchmark-panel" data-benchmark="seen" aria-labelledby="seen-results-title">
-        <header class="benchmark-heading"><div><h3 id="seen-results-title">TimeWarp v6</h3><p>Evaluation on the interface version seen during training.</p></div><a href="assets/webkd-paper.pdf#page=7" target="_blank" rel="noopener">Table 1 · p. 7 ↗</a></header>
+        <header class="benchmark-heading"><div><h3 id="seen-results-title">TimeWarp v6</h3><p>Evaluation on the interface version seen during training.</p></div><a href="https://arxiv.org/pdf/2610.19834#page=7" target="_blank" rel="noopener">Table 1 · p. 7 ↗</a></header>
         <div class="benchmark-controls"><div class="benchmark-models" role="group" aria-label="Student model for TimeWarp v6"></div></div>
         <figure class="benchmark-chart" aria-label="TimeWarp v6 success rates">
           <div class="benchmark-chart-meta"><span class="benchmark-context">TimeWarp v6</span><span class="benchmark-scale-note"></span></div>
@@ -147,7 +147,7 @@
       </article>
 
       <article class="benchmark-panel" data-benchmark="unseen" aria-labelledby="unseen-results-title">
-        <header class="benchmark-heading"><div><h3 id="unseen-results-title">TimeWarp v1–v5</h3><p>Evaluation across five interface versions held out from training.</p></div><a href="assets/webkd-paper.pdf#page=7" target="_blank" rel="noopener">Table 1 · p. 7 ↗</a></header>
+        <header class="benchmark-heading"><div><h3 id="unseen-results-title">TimeWarp v1–v5</h3><p>Evaluation across five interface versions held out from training.</p></div><a href="https://arxiv.org/pdf/2610.19834#page=7" target="_blank" rel="noopener">Table 1 · p. 7 ↗</a></header>
         <div class="benchmark-controls"><div class="benchmark-models" role="group" aria-label="Student model for unseen TimeWarp versions"></div><label class="benchmark-select">Interface version <select class="benchmark-version" aria-label="Unseen TimeWarp interface version"></select></label></div>
         <figure class="benchmark-chart" aria-label="Unseen TimeWarp success rates">
           <div class="benchmark-chart-meta"><span class="benchmark-context">TimeWarp v1</span><span class="benchmark-scale-note"></span></div>
@@ -174,12 +174,16 @@
         <span class="benchmark-status visually-hidden" role="status" aria-live="polite"></span>
       </article>
     </section>
-    <section class="paper-section" id="paper" aria-labelledby="paper-heading"><div class="wrap"><p class="section-number"><span>04</span> Paper and citation</p><div class="paper-layout"><div><h2 id="paper-heading">Teaching Agents in Their Own Style: Black-Box Teacher Distillation for Web Agents</h2><p class="paper-authors">Md Farhan Ishmam · Kenneth Marino</p><p class="institution">Kahlert School of Computing, University of Utah</p><a class="button" href="assets/webkd-paper.pdf" target="_blank" rel="noopener">Open the preprint <span class="arrow" aria-hidden="true">↗</span></a></div><div><div class="citation"><div class="citation-header"><span class="mono">BibTeX · Preprint</span><button class="copy-button" id="copy-citation">Copy citation</button></div><pre id="citation-text">@misc{ishmamWebKD,
-  title={Teaching Agents in Their Own Style:
-    Black-Box Teacher Distillation for Web Agents},
+    <section class="paper-section" id="paper" aria-labelledby="paper-heading"><div class="wrap"><p class="section-number"><span>04</span> Paper and citation</p><div class="paper-layout"><div><h2 id="paper-heading">Teaching Agents in Their Own Style: Black-Box Teacher Distillation for Web Agents</h2><p class="paper-authors">Md Farhan Ishmam · Kenneth Marino</p><p class="institution">Kahlert School of Computing, University of Utah</p><a class="button" href="https://arxiv.org/abs/2610.19834" target="_blank" rel="noopener">Read on arXiv <span class="arrow" aria-hidden="true">↗</span></a></div><div><div class="citation"><div class="citation-header"><span class="mono">BibTeX · arXiv</span><button class="copy-button" id="copy-citation">Copy citation</button></div><pre id="citation-text">@misc{ishmam2026webkd,
+  title={Teaching Agents in their Own Style:
+    Blackbox Teacher Distillation for Web Agents},
   author={Ishmam, Md Farhan and Marino, Kenneth},
-  note={Preprint}
-}</pre></div><p class="cite-note">Provisional citation for the supplied preprint; update with the archival identifier when available.</p><span class="visually-hidden" id="copy-status" role="status"></span></div></div></div></section>
+  year={2026},
+  eprint={2610.19834},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  url={https://arxiv.org/abs/2610.19834}
+}</pre></div><p class="cite-note"><a href="https://arxiv.org/abs/2610.19834" target="_blank" rel="noopener">arXiv:2610.19834 [cs.AI] · 2026</a></p><span class="visually-hidden" id="copy-status" role="status"></span></div></div></div></section>
   </main>
   <footer class="wrap footer"><a class="brand" href="#">webkd<span aria-hidden="true">↗</span></a><div class="footer-links"><a href="https://github.com/sparklabutah/webkd" target="_blank" rel="noopener">Code ↗</a></div></footer>
 
@@ -204,7 +208,7 @@
       catch{const range=document.createRange();range.selectNodeContents(document.getElementById('citation-text'));const selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);button.textContent='Text selected';document.getElementById('copy-status').textContent='Citation selected. Press Control C or Command C to copy.';}
     });
   </script>
-  <script src="results-data.js?v=20261014-r3"></script>
+  <script src="results-data.js?v=20261014-r4"></script>
   <script src="results.js?v=20261014-r3"></script>
   <script src="design-preview.js?v=20261014-r4"></script>
   <script src="site-video.js?v=20261014-r3"></script>
