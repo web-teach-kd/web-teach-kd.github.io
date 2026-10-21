@@ -20,7 +20,7 @@ The saved explorer selection is now the default page, with no preview URL requir
 - **Layout:** full paper-title hero, quiet accents, compact spacing, sharp edges.
 - **Content order:** idea → method → results → paper, with the detailed Manim animation and full loss explanations.
 
-The header switch changes color mode and remembers the choice in this browser. First-time visitors follow their system preference; subsequent system changes are followed until the visitor makes an explicit selection. The mode initializes before the page paints. Embedded explorer previews use their palette's native light/dark appearance; full preview pages can switch modes without changing the main site's preference.
+The header switch changes color mode and remembers the choice in this browser. First-time visitors default to light mode regardless of their system preference; system theme changes do not change the site's mode. The mode initializes before the page paints. Embedded explorer previews use their palette's native light/dark appearance; full preview pages can switch modes without changing the main site's preference.
 
 `site-design.js` records the approved settings. The matching HTML attributes and title in `index.html` provide the same layout before JavaScript runs. `site-theme.js` controls mode preference and accessible custom-accent colors; `site-theme.css` provides the paired colors and component treatments.
 

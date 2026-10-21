@@ -5,14 +5,13 @@
   const key = 'webkd-color-mode';
   const query = new URLSearchParams(location.search);
   const preview = query.has('design') || query.get('explore') === '1';
-  const system = window.matchMedia('(prefers-color-scheme: dark)');
   let preference;
   let customAccent = '';
   if (!preview) {
-    try { preference = localStorage.getItem(key); } catch { /* System mode still works. */ }
+    try { preference = localStorage.getItem(key); } catch { /* Default to light mode. */ }
   }
   if (!['light', 'dark'].includes(preference)) preference = null;
-  root.dataset.mode = preference || (preview ? 'light' : system.matches ? 'dark' : 'light');
+  root.dataset.mode = preference || 'light';
 
   function channels(color) {
     if (/^#[\da-f]{6}$/i.test(color)) return color.slice(1).match(/../g).map(v => parseInt(v, 16));
@@ -70,13 +69,10 @@
     if (preview && !preference) root.dataset.mode = event.detail.palette === 'night' ? 'dark' : 'light';
     refresh();
   });
-  system.addEventListener('change', event => {
-    if (!preference && !preview) { root.dataset.mode = event.matches ? 'dark' : 'light'; refresh(); }
-  });
   window.addEventListener('storage', event => {
     if (preview || event.key !== key) return;
     preference = ['light', 'dark'].includes(event.newValue) ? event.newValue : null;
-    root.dataset.mode = preference || (system.matches ? 'dark' : 'light');
+    root.dataset.mode = preference || 'light';
     refresh();
   });
   document.addEventListener('DOMContentLoaded', () => {
