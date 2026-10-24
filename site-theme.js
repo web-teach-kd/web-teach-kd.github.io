@@ -48,7 +48,8 @@
     }
     const toggle = document.getElementById('theme-toggle');
     if (toggle) {
-      toggle.setAttribute('aria-label', `Switch to ${dark ? 'light' : 'dark'} mode`);
+      // A stable name with a pressed state; the tooltip describes the next action.
+      toggle.setAttribute('aria-label', 'Dark mode');
       toggle.setAttribute('aria-pressed', String(dark));
       toggle.title = `Switch to ${dark ? 'light' : 'dark'} mode`;
       toggle.querySelector('.theme-label').textContent = dark ? 'Dark' : 'Light';
@@ -76,7 +77,11 @@
     refresh();
   });
   document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('theme-toggle')?.addEventListener('click', () => setMode(root.dataset.mode === 'dark' ? 'light' : 'dark'));
+    document.getElementById('theme-toggle')?.addEventListener('click', () => {
+      const run = () => setMode(root.dataset.mode === 'dark' ? 'light' : 'dark');
+      if (document.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.startViewTransition(run);
+      else run();
+    });
     refresh();
   });
 })();

@@ -10,6 +10,30 @@
   const format = (value, precision) => Number.isFinite(value) ? value.toFixed(precision) : '—';
   const valueFor = (model, method, version) => data.timewarp.models?.[model]?.[method]?.[version];
   const versionsFor = kind => kind === 'seen' ? ['v6'] : ['v1', 'v2', 'v3', 'v4', 'v5'];
+  const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Bars and whiskers glide from their previous widths; the numbers never animate.
+  function snapshot(rows) {
+    const widths = new Map();
+    rows.querySelectorAll('.benchmark-row[data-method]').forEach(row => {
+      const bar = row.querySelector('.benchmark-bar'), error = row.querySelector('.benchmark-error');
+      widths.set(row.dataset.method, { width: bar?.style.width, left: error?.style.left, errorWidth: error?.style.width });
+    });
+    return widths;
+  }
+  function glide(panel, rows, previous) {
+    if (!previous.size || reduceMotion() || typeof Element.prototype.animate !== 'function' || panel.classList.contains('is-pending')) return;
+    const timing = { duration: 500, easing: 'cubic-bezier(.2,.7,.2,1)' };
+    rows.querySelectorAll('.benchmark-row[data-method]').forEach(row => {
+      const before = previous.get(row.dataset.method);
+      if (!before) return;
+      const bar = row.querySelector('.benchmark-bar'), error = row.querySelector('.benchmark-error');
+      if (bar && before.width && before.width !== bar.style.width) bar.animate([{ width: before.width }, { width: bar.style.width }], timing);
+      if (error && before.left && (before.left !== error.style.left || before.errorWidth !== error.style.width)) {
+        error.animate([{ left: before.left, width: before.errorWidth }, { left: error.style.left, width: error.style.width }], timing);
+      }
+    });
+  }
 
   function axisMaximum(kind) {
     let maximum = 0;
@@ -28,7 +52,6 @@
     const maximum = axisMaximum(kind);
     const modelGroup = panel.querySelector('.benchmark-models');
     const rows = panel.querySelector('.benchmark-rows');
-    const table = panel.querySelector('.benchmark-table');
     const status = panel.querySelector('.benchmark-status');
     const select = panel.querySelector('.benchmark-version');
     modelGroup.innerHTML = data.models.map(model => `<button type="button" data-student="${escape(model.id)}" aria-pressed="${model.id === state.model}">${escape(model.label)}</button>`).join('');
@@ -38,34 +61,25 @@
       const model = modelById.get(state.model);
       modelGroup.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.student === state.model)));
       panel.querySelector('.benchmark-context').textContent = `${model.label} · TimeWarp ${state.version}`;
+      const previous = snapshot(rows);
       rows.innerHTML = chartMethods.filter(method => methodById.has(method)).map(methodId => {
         const method = methodById.get(methodId);
         const value = valueFor(state.model, methodId, state.version);
-        if (!Number.isFinite(value?.mean)) return `<div class="benchmark-row"><span class="benchmark-method">${escape(method.label)}</span><span class="benchmark-unreported">Not reported</span></div>`;
+        if (!Number.isFinite(value?.mean)) return `<div class="benchmark-row" data-method="${escape(methodId)}"><span class="benchmark-method">${escape(method.label)}</span><span class="benchmark-unreported">Not reported</span></div>`;
         const mean = value.mean;
         const hasError = Number.isFinite(value.se);
         const low = Math.max(0, mean - (hasError ? value.se : 0));
         const high = Math.min(maximum, mean + (hasError ? value.se : 0));
         const label = `${method.label}: ${format(mean, 1)} percent${hasError ? ', standard error ' + format(value.se, 2) + ' percentage points' : ''}`;
-        return `<div class="benchmark-row${methodId === 'webkd' ? ' is-webkd' : ''}">
+        return `<div class="benchmark-row${methodId === 'webkd' ? ' is-webkd' : ''}" data-method="${escape(methodId)}">
           <span class="benchmark-method">${escape(method.label)}</span>
           <span class="benchmark-track" aria-hidden="true"><span class="benchmark-bar" style="width:${mean / maximum * 100}%"></span>${hasError ? `<span class="benchmark-error" style="left:${low / maximum * 100}%;width:${(high - low) / maximum * 100}%"></span>` : ''}</span>
           <span class="benchmark-number" aria-label="${escape(label)}">${format(mean, 1)}${hasError ? `<span> ± ${format(value.se, 2)}</span>` : ''}</span>
         </div>`;
       }).join('');
+      glide(panel, rows, previous);
       panel.querySelector('.benchmark-axis').innerHTML = Array.from({length:5}, (_, index) => `<span>${format(maximum * index / 4, maximum % 4 ? 1 : 0)}${index === 4 ? '%' : ''}</span>`).join('');
-      panel.querySelector('.benchmark-scale-note').textContent = `0–${maximum}% scale, fixed across ${kind === 'seen' ? 'students' : 'students and versions'}`;
-      const tableVersions = versionsFor(kind);
-      table.innerHTML = `<caption>${escape(model.label)} · TimeWarp ${kind === 'seen' ? 'v6' : 'unseen versions v1–v5'} · Success rate (%)</caption>
-        <thead><tr><th scope="col">Method</th>${tableVersions.map(version => `<th scope="col"${version === state.version ? ' class="is-selected-version"' : ''}>${version}<span>Mean ± SE</span></th>`).join('')}</tr></thead>
-        <tbody>${data.methods.map(method => `<tr${method.id === 'webkd' ? ' class="is-webkd"' : ''}><th scope="row">${escape(method.label)}</th>${tableVersions.map(version => {
-          const value = valueFor(state.model, method.id, version);
-          return `<td${version === state.version ? ' class="is-selected-version"' : ''}>${Number.isFinite(value?.mean) ? `${format(value.mean, 1)} <span>± ${format(value.se, 2)}</span>` : '—'}</td>`;
-        }).join('')}</tr>`).join('')}</tbody>${data.timewarp.teacher ? `<tfoot><tr><th scope="row">${escape(data.timewarp.teacher.label)}<span>Teacher reference</span></th>${tableVersions.map(version => {
-          const value = data.timewarp.teacher.values?.[version];
-          return `<td>${Number.isFinite(value?.mean) ? `${format(value.mean, 1)} <span>± ${format(value.se, 2)}</span>` : '—'}</td>`;
-        }).join('')}</tr></tfoot>` : ''}`;
-      status.textContent = `${model.label}, TimeWarp ${state.version}. Mean success rates and standard errors displayed. The complete table is available below.`;
+      status.textContent = `${model.label}, TimeWarp ${state.version}. Mean success rates and standard errors displayed.`;
     }
     modelGroup.addEventListener('click', event => {
       const button = event.target.closest('button[data-student]');
@@ -89,7 +103,6 @@
     const modelGroup = panel.querySelector('.benchmark-models');
     const select = panel.querySelector('.benchmark-difficulty');
     const rows = panel.querySelector('.benchmark-rows');
-    const table = panel.querySelector('.benchmark-table');
     const status = panel.querySelector('.benchmark-status');
     const percent = value => Number.isFinite(value) ? value * 100 : NaN;
     const getValue = (method, difficulty) => online.models[state.model]?.[method]?.[difficulty];
@@ -103,28 +116,24 @@
       const difficulty = difficulties.get(state.difficulty);
       modelGroup.querySelectorAll('button').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.student === state.model)));
       panel.querySelector('.benchmark-context').textContent = `${model.label} · ${difficulty.label}`;
+      const previous = snapshot(rows);
       rows.innerHTML = online.methods.map(method => {
         const value = getValue(method.id, state.difficulty);
         const mean = percent(value?.mean);
         const se = percent(value?.se);
-        if (!Number.isFinite(mean)) return `<div class="benchmark-row"><span class="benchmark-method">${escape(method.label)}</span><span class="benchmark-unreported">Not reported</span></div>`;
+        if (!Number.isFinite(mean)) return `<div class="benchmark-row" data-method="${escape(method.id)}"><span class="benchmark-method">${escape(method.label)}</span><span class="benchmark-unreported">Not reported</span></div>`;
         const hasError = Number.isFinite(se);
         const low = Math.max(0, mean - (hasError ? se : 0));
         const high = Math.min(maximum, mean + (hasError ? se : 0));
         const label = `${method.label}: ${format(mean, 1)} percent${hasError ? ', standard error ' + format(se, 1) + ' percentage points' : ''}`;
-        return `<div class="benchmark-row${method.id === 'webkd' ? ' is-webkd' : ''}">
+        return `<div class="benchmark-row${method.id === 'webkd' ? ' is-webkd' : ''}" data-method="${escape(method.id)}">
           <span class="benchmark-method">${escape(method.label)}</span>
           <span class="benchmark-track" aria-hidden="true"><span class="benchmark-bar" style="width:${Math.min(maximum, mean) / maximum * 100}%"></span>${hasError ? `<span class="benchmark-error" style="left:${low / maximum * 100}%;width:${Math.max(0, high - low) / maximum * 100}%"></span>` : ''}</span>
           <span class="benchmark-number" aria-label="${escape(label)}">${format(mean, 1)}${hasError ? `<span> ± ${format(se, 1)}</span>` : ''}</span>
         </div>`;
       }).join('');
-      table.innerHTML = `<caption>${escape(model.label)} · OnlineMind2Web · Success rate (%)</caption>
-        <thead><tr><th scope="col">Method</th>${online.difficulties.map(item => `<th scope="col"${item.id === state.difficulty ? ' class="is-selected-version"' : ''}>${escape(item.label)}<span>Mean ± SE</span></th>`).join('')}</tr></thead>
-        <tbody>${online.methods.map(method => `<tr${method.id === 'webkd' ? ' class="is-webkd"' : ''}><th scope="row">${escape(method.label)}</th>${online.difficulties.map(item => {
-          const value = getValue(method.id, item.id);
-          return `<td${item.id === state.difficulty ? ' class="is-selected-version"' : ''}>${Number.isFinite(value?.mean) ? `${format(percent(value.mean), 1)} <span>± ${format(percent(value.se), 1)}</span>` : '—'}</td>`;
-        }).join('')}</tr>`).join('')}</tbody>`;
-      status.textContent = `${model.label}, OnlineMind2Web, ${difficulty.label}. Seven methods displayed as mean success rate and standard error. The axis remains 0 to 25 percent. All difficulties are available in the table below.`;
+      glide(panel, rows, previous);
+      status.textContent = `${model.label}, OnlineMind2Web, ${difficulty.label}. Seven methods displayed as mean success rate and standard error. The axis remains 0 to 25 percent.`;
     }
     modelGroup.addEventListener('click', event => {
       const button = event.target.closest('button[data-student]');

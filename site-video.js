@@ -109,6 +109,25 @@
   });
   video.addEventListener('durationchange', updateDuration);
 
+  // The chapter timeline fills with playback and marks the current chapter.
+  const chapters = [...film.querySelectorAll('[data-film-seek]')];
+  const starts = chapters.map(button => Number(button.dataset.filmSeek));
+  function updateChapters() {
+    if (!chapters.length || !Number.isFinite(video.duration)) return;
+    const time = video.currentTime;
+    let current = -1;
+    starts.forEach((start, index) => { if (time >= start) current = index; });
+    chapters.forEach((button, index) => {
+      const end = index < starts.length - 1 ? starts[index + 1] : video.duration;
+      const progress = index < current ? 1 : index > current ? 0 : Math.min(1, (time - starts[index]) / Math.max(.001, end - starts[index]));
+      button.style.setProperty('--chapter-progress', progress.toFixed(3));
+      button.classList.toggle('is-done', index < current);
+      if (index === current) button.setAttribute('aria-current', 'step');
+      else button.removeAttribute('aria-current');
+    });
+  }
+  ['timeupdate', 'seeked', 'loadedmetadata'].forEach(type => video.addEventListener(type, updateChapters));
+
   film.querySelectorAll('[data-film-seek]').forEach(button => button.addEventListener('click', () => {
     const seconds = Number(button.dataset.filmSeek);
     if (!Number.isFinite(seconds) || seconds < 0 || !available()) return;
@@ -141,6 +160,18 @@
       speedControl.querySelector('summary')?.focus();
       event.preventDefault();
     }
+  });
+  // The menu opens upward unless the sticky header leaves too little room above it.
+  speedControl?.addEventListener('toggle', () => {
+    if (!speedControl.open) return;
+    const menu = speedControl.querySelector('.film-speed-menu');
+    const summary = speedControl.querySelector('summary');
+    if (!menu || !summary) return;
+    const box = summary.getBoundingClientRect();
+    const ceiling = document.querySelector('.site-header')?.getBoundingClientRect().bottom || 0;
+    const above = box.top - ceiling;
+    const below = innerHeight - box.bottom;
+    speedControl.classList.toggle('opens-down', above < menu.offsetHeight + 8 && below > above);
   });
 
   // The design explorer can hide the video or replace its source synchronously.

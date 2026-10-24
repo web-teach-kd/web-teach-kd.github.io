@@ -17,12 +17,13 @@ The saved explorer selection is now the default page, with no preview URL requir
 - **Light mode — Field notes:** warm ivory `#F7F7EF`, ink `#252820`, olive `#D3DF81`.
 - **Dark mode — After hours:** deep slate `#151C24`, light ink `#EFF4F7`, green `#B9E69A`.
 - **Typography:** Manrope headings and body; IBM Plex Mono for code, labels, and data.
-- **Layout:** full paper-title hero, quiet accents, compact spacing, sharp edges.
+- **Layout:** full paper-title hero, quiet accents, balanced spacing, sharp edges. Each section has one heading, one short lead, and one focal object, with no numbered section labels or caption strips.
+- **Header:** translucent sticky header that gains a hairline on scroll, an underline on the current section's nav link, and an icon-only color-mode toggle.
 - **Content order:** idea → method → results → paper, with the detailed Manim animation and full loss explanations.
 
 The header switch changes color mode and remembers the choice in this browser. First-time visitors default to light mode regardless of their system preference; system theme changes do not change the site's mode. The mode initializes before the page paints. Embedded explorer previews use their palette's native light/dark appearance; full preview pages can switch modes without changing the main site's preference.
 
-`site-design.js` records the approved settings. The matching HTML attributes and title in `index.html` provide the same layout before JavaScript runs. `site-theme.js` controls mode preference and accessible custom-accent colors; `site-theme.css` provides the paired colors and component treatments.
+`site-design.js` records the approved settings. The matching HTML attributes and title in `index.html` provide the same layout before JavaScript runs. `site-theme.js` controls mode preference and accessible custom-accent colors; `site-theme.css` provides the paired colors and component treatments. `refine.css` loads last and holds the current presentation layer: type scale (nothing below 12px), component styles, hover states, and motion. Setting `data-corners="soft"` on `<html>` rounds its controls and cards through the `--r-control` and `--r-card` tokens.
 
 Open `design-explorer.html` directly for the dedicated working document with five workspaces:
 
@@ -38,13 +39,19 @@ Files: `design-explorer.html`, `design-explorer.css`, `design-explorer.js`, `des
 
 ## Content structure
 
-1. **Title:** single desktop headline with the University of Utah wordmark immediately to its left, authors, and Paper / Code links.
-2. **Overview:** concise method description and student / raw teacher / style-preserving correction examples.
-3. **Method:** Manim explanation, four training stages, and an enlarged expandable equation reference. The full loss is inside the disclosure with the contribution scores, weight map, and anchor. Its equation and two concise term descriptions sit side by side on wide screens and stack on mobile.
-4. **Experimental results:** separate panels for seen TimeWarp v6, unseen v1–v5, and OnlineMind2Web. TimeWarp model/version controls update charts with standard-error whiskers and complete data tables. OnlineMind2Web has model and difficulty controls, mean/standard-error bars, and a complete table using the author-supplied numerical values. The original figure remains linked for reference.
-5. **Paper and citation:** canonical arXiv link and copyable BibTeX with the arXiv identifier, year, and subject class.
+1. **Title:** the University of Utah block U mark centred above a single desktop headline; the title, authors, affiliation, and Paper / Code links share one centre line at every width.
+2. **Overview:** a one-paragraph lead beside the example correction card, which has no visible label (its accessible name is “Example correction”). A Student / Teacher / WEBKD segmented control switches the response; edited fields are marked, the targeted observation element is highlighted, and the card resizes smoothly between responses.
+3. **Method:** one lead sentence, the Manim film with a chapter timeline that fills during playback, four numbered training stages, and an expandable equation reference titled “Training objective and equations” (the formula sandbox remains in `design-explorer.html`). The full loss is inside the disclosure with the contribution scores, weight map, and anchor. Its equation and two concise term descriptions sit side by side on wide screens and stack on mobile.
+4. **Results:** the lead states once that bars are means of three runs with ±1 standard-error whiskers, and the WEBKD row is highlighted. Separate panels cover TimeWarp v6 (seen), v1–v5 (unseen), and OnlineMind2Web; each has only its title, controls, chart, axis label, and legend, with no description lines, footnotes, source links, or full data tables. TimeWarp model/version controls and OnlineMind2Web model/difficulty controls update the charts; screen readers hear each value with its standard error.
+5. **Cite this work:** a one-line reference, the canonical arXiv link, and copyable BibTeX with the arXiv identifier, year, and subject class.
 
 The presentation uses academic labels, without slogans, headline metric cards, or a standalone loss banner. `paper-layout.css` controls the revised hierarchy. `results-data.js` stores the transcribed source values; `results.js` and `results.css` render the benchmark panels.
+
+## Motion
+
+Motion uses one easing curve (`cubic-bezier(.2,.7,.2,1)`) and three durations: 160 ms for hover and press, 280 ms for state changes, and 720 ms for reveals. The hero fades up on load. Below-the-fold focal blocks (overview columns, method film and stages, equation reference, results panels, citation) rise into place once as they enter the viewport. Bars grow from zero the first time a chart is seen and glide between student selections; numbers never animate, so values on screen always match the paper. Hover feedback is limited to arrow nudges, growing underlines, border emphasis, method-stage rails, and dimming of non-hovered chart rows.
+
+The head script adds `html.motion-ok` only outside the explorer (`?explore=1`), with IntersectionObserver support, and without a reduced-motion preference. Without it — or without JavaScript, or when printing — all content is visible immediately. `site-motion.js` handles the header scroll state, active navigation, reveals, and bar growth.
 
 ## Manim animation
 
@@ -70,10 +77,10 @@ Copy the output MP4 and PNG into the asset paths above. No LaTeX is required. Th
 
 ## Source and content notes
 
-The supplied preprint is copied to `assets/webkd-paper.pdf`. TimeWarp values are transcribed from Table 1 (p. 7): 144 mean/standard-error pairs across three students, eight methods, and six versions. OnlineMind2Web uses 56 mean/standard-error pairs supplied by the author on October 14, 2026, covering two students, seven methods, and four difficulty/overall groups. Values are stored as fractions and displayed as percentages; difficulty rates refer to each subset. Overall results and their standard errors are used as supplied, without reconstructing them from subset results. The original Figure 4 (p. 8) remains available for reference. Means and standard errors are over three runs. No Gemma results are inferred. Two Qwen 4B overall means (Takeover and Re-style) currently disagree with the weighted difficulty means; the supplied table values are retained verbatim.
+The supplied preprint is copied to `assets/webkd-paper.pdf`. TimeWarp values are transcribed from Table 1 (p. 7): 144 mean/standard-error pairs across three students, eight methods, and six versions. OnlineMind2Web uses 56 mean/standard-error pairs supplied by the author on October 14, 2026, covering two students, seven methods, and four difficulty/overall groups. Values are stored as fractions and displayed as percentages; difficulty rates refer to each subset. Overall results and their standard errors are used as supplied, without reconstructing them from subset results. The original Figure 4 (p. 8) is kept as `assets/onlinemind2web-results.png` but is not linked from the page. Means and standard errors are over three runs. No Gemma results are inferred. Two Qwen 4B overall means (Takeover and Re-style) currently disagree with the weighted difficulty means; the supplied table values are retained verbatim.
 
-The browser correction example is explicitly illustrative and adapted from Figure 1. It is not a recorded or live agent session. Paper links use [arXiv:2610.19834](https://arxiv.org/abs/2610.19834). The BibTeX follows the arXiv title and metadata (2026, cs.AI). The footer contains the webkd home link, followed by Paper and Code links. The hero and footer Code links point to the user-provided [WEBKD repository](https://github.com/sparklabutah/webkd).
+The browser correction example is illustrative and adapted from Figure 1; it is not a recorded or live agent session. Its provenance is stated in the card's figure caption, which is visually hidden, announced by assistive technology, and shown in print. Paper links use [arXiv:2610.19834](https://arxiv.org/abs/2610.19834). The BibTeX follows the arXiv title and metadata (2026, cs.AI). The footer contains the webkd home link, followed by Paper and Code links. The hero and footer Code links point to the user-provided [WEBKD repository](https://github.com/sparklabutah/webkd).
 
-The University of Utah wordmark comes from the [official university website asset](https://templates.utah.edu/_main-v3-1/images/template/university-of-utah-logo.svg). The dark version preserves the asset; the light version changes its white lettering to black and retains the red mark.
+The University of Utah block U in `assets/utah-mark.svg` is cropped, unchanged, from the [official university website asset](https://templates.utah.edu/_main-v3-1/images/template/university-of-utah-logo.svg); the wordmark is not shown. Because the mark is red in both versions of the asset, one file serves light and dark mode. The full wordmark files (`assets/utah-logo-light.svg`, `assets/utah-logo-dark.svg`) are no longer used by the page.
 
-The site is a buildless static site. Serve it locally with `python3 serve.py`, or serve the repository root with static hosting. The navigation’s “Read the paper” link opens the canonical arXiv page directly.
+The site is a buildless static site. Serve it locally with `python3 serve.py`, or serve the repository root with static hosting. The navigation’s “Paper” link opens the canonical arXiv page directly.

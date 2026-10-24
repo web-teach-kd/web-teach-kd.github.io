@@ -4,7 +4,7 @@ window.WEBKD_SITE_DESIGN = Object.freeze({
   typography: 'swiss',
   hero: 'paper',
   accent: 'quiet',
-  density: 'compact',
+  density: 'balanced',
   corners: 'sharp',
   animation: 'deep',
   customAccent: '',
